@@ -234,6 +234,8 @@ pub enum KeyPress {
     Left,
     /// Right
     Right,
+    /// Print
+    Print,
 }
 
 #[cfg(feature = "keysyms")]
@@ -253,6 +255,7 @@ impl TryFrom<XKeySym> for KeyPress {
             XKeySym::XK_Down | XKeySym::XK_KP_Down => KeyPress::Down,
             XKeySym::XK_Left | XKeySym::XK_KP_Left => KeyPress::Left,
             XKeySym::XK_Right | XKeySym::XK_KP_Right => KeyPress::Right,
+            XKeySym::XK_Print => KeyPress::Print,
             s => KeyPress::Utf8(s.as_utf8_string()?),
         })
     }
@@ -299,6 +302,10 @@ pub enum MouseButton {
     ScrollUp,
     /// 5
     ScrollDown,
+    /// 8
+    ExtraOne,
+    /// 9
+    ExtraTwo,
 }
 
 impl From<MouseButton> for u8 {
@@ -309,6 +316,8 @@ impl From<MouseButton> for u8 {
             MouseButton::Right => 3,
             MouseButton::ScrollUp => 4,
             MouseButton::ScrollDown => 5,
+            MouseButton::ExtraOne => 8,
+            MouseButton::ExtraTwo => 9,
         }
     }
 }
@@ -323,6 +332,8 @@ impl TryFrom<u8> for MouseButton {
             3 => Ok(Self::Right),
             4 => Ok(Self::ScrollUp),
             5 => Ok(Self::ScrollDown),
+            8 => Ok(Self::ExtraOne),
+            9 => Ok(Self::ExtraTwo),
             _ => Err(Error::UnknownMouseButton { button: n }),
         }
     }
