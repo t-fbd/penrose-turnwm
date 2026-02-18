@@ -175,6 +175,8 @@ fn to_mouse_state(detail: u8, state: KeyButMask) -> Option<MouseState> {
         3 => MouseButton::Right,
         4 => MouseButton::ScrollUp,
         5 => MouseButton::ScrollDown,
+        8 => MouseButton::ExtraOne,
+        9 => MouseButton::ExtraTwo,
         _ => {
             warn!(button = detail, "dropping unknown mouse button event");
             return None;

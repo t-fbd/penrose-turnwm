@@ -41,7 +41,10 @@ pub fn keycodes_from_xmodmap() -> Result<HashMap<String, u8>> {
             };
             words.skip(1).map(move |name| (name.into(), key_code))
         })
-        .collect();
+        .fold(HashMap::new(), |mut m, (name, code)| {
+            m.entry(name).or_insert(code);
+            m
+        });
 
     Ok(m)
 }
